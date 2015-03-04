@@ -4,7 +4,7 @@ Plugin Name: Nucleus to Wordpress importer
 Description: Import content from a Nucleus CMS powered site into WordPress
 Author: Abdussamad 
 License: GPL
-Version: 0.1
+Version: 0.2
 */
 
 set_time_limit(0);
@@ -35,6 +35,14 @@ class nucleus_import extends WP_Importer  {
 	private $nucblog; //blog id (bnumber) of nucleus blog;
 	private $step = 0; //step of the import process;
 	private $site_url; //wp site url overriden via opening web form or default
+	
+	private $defaults = array( 
+								'db_name'      => '',
+								'db_user'      => '',
+								'db_password'  => '',
+								'db_host'      => 'localhost',
+								'table_prefix' => 'nucleus_'
+								);
 
 	function header() {
 		echo '<div class="wrap">';
@@ -169,7 +177,7 @@ class nucleus_import extends WP_Importer  {
 		return $this->nucdb->get_results("SELECT 	`inumber`, `ititle`, `ibody`, `imore`, `iblog`, `iauthor`, `itime`, 
 								`iclosed`, `idraft`, `icat` FROM {$this->nucpre}item 
 								WHERE `iblog` = $this->nucblog
-									LIMIT $start,100", ARRAY_A);
+									LIMIT $start,500", ARRAY_A);
 		
 	}
 	
@@ -461,16 +469,16 @@ class nucleus_import extends WP_Importer  {
 	}
 	
 	function import_posts() {
-		// Process 100 posts per load, and reload between runs
+		// Process 500 posts per load, and reload between runs
 		$start = isset( $_GET["start"] ) ? $_GET["start"] : 0 ;
 		$posts = $this->get_nucleus_posts( $start );
 		
 		if ( count($posts) != 0 ) 
 			$this->posts2wp( $posts );
 			
-		if ( count($posts) == 100 ) {
+		if ( count($posts) == 500 ) {
 			echo "Reloading: More work to do.";
-			$url = "admin.php?import=nucleus&step=$this->step&start=".( $start + 100 );
+			$url = "admin.php?import=nucleus&step=$this->step&start=".( $start + 500 );
 			?>
 			<script type="text/javascript">
 			window.location = '<?php echo $url; ?>';
@@ -545,23 +553,23 @@ class nucleus_import extends WP_Importer  {
 		<ul>
 			<li>
 				<label for="dbuser"><?php _e( 'Nucleus Database User:' ) ?></label> 
-				<input type="text" name="dbuser" id="dbuser" value="nucleurrabbit" />
+				<input type="text" name="dbuser" id="dbuser" value="<?php echo esc_attr( $this->defaults[ 'db_user' ] ); ?>" />
 			</li>
 			<li>
 				<label for="dbpass"><?php _e( 'Nucleus Database Password:' ) ?></label>
-				<input type="password" name="dbpass" id="dbpass" value="nuclearWabbit" />
+				<input type="password" name="dbpass" id="dbpass" value="<?php echo esc_attr( $this->defaults[ 'db_password' ] ); ?>" />
 			</li>
 			<li>
 				<label for="dbname"><?php _e( 'Nucleus Database Name:' ) ?></label>
-				<input type="text" id="dbname" name="dbname" value='nucrabbit' />
+				<input type="text" id="dbname" name="dbname" value='<?php echo esc_attr( $this->defaults[ 'db_name' ] ); ?>' />
 			</li>
 			<li>
 				<label for="dbhost"><?php _e( 'Nucleus Database Host:' ) ?></label>
-				<input type="text" id="dbhost" name="dbhost" value="localhost" />
+				<input type="text" id="dbhost" name="dbhost" value="<?php echo esc_attr( $this->defaults[ 'db_host' ] ); ?>" />
 			</li>
 			<li>
 				<label for="dbprefix"><?php _e( 'Nucleus Table prefix (if any):' ) ?></label>
-				<input type="text" name="dbprefix" id="dbprefix" value = "nucleus_" />
+				<input type="text" name="dbprefix" id="dbprefix" value = "<?php echo esc_attr( $this->defaults[ 'table_prefix' ] ); ?>" />
 			</li>
 			<li>
 				<label for="site_url"><?php _e( 'WordPress Site URL (override) (no trailing slash): http://' ) ?></label>
