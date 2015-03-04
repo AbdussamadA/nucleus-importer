@@ -1,0 +1,30 @@
+Nucleus import notes:
+--------------------
+
+Before beginning:
+    - Login to nucleus and note down stats like item count and comment count. Open a few items and lock + protect the tab they are in
+    
+    - Edit wp-config.php and WP_DEBUG to true
+    
+    - Edit wp-config.php to reflect nucleus database's charset. Use "show create table <table_name>" to see charset info.
+    
+    - In the plugin file: optionally adjust default database details (username, password etc.) at the very top of the importer PHP class
+    
+    - Remember nucleus "media" folder has to be in WP root dir for images to show up.
+     
+After import
+    
+    - VERY IMPORTANT - set WP_DEBUG to false in wp-config.php
+    
+    - Visit settings > permalink to make it generate .htaccess file.
+    
+    - Check that posts have images and content.
+    
+    - Check that you can create/add new posts, pages and comments.
+    
+    - Optionally adjust email addresses in settings > general settings if need be.
+    
+    - Deactivate and delete the importer plugin.
+    
+   
+    
