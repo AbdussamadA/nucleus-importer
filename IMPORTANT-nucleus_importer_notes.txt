@@ -22,7 +22,7 @@ After import
     
     - Check that you can create/add new posts, pages and comments.
     
-    - Optionally adjust email addresses in settings > general settings if need be.
+    - Change email address in settings > general settings.
     
     - Deactivate and delete the importer plugin.
     
