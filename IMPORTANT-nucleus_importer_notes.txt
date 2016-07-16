@@ -1,6 +1,10 @@
 Nucleus import notes:
 --------------------
 
+NOTE 1: Empty $MYSQL_PREFIX in nucleus config file (config.php) actually means the default prefix of "nucleus_"
+
+NOTE 2: Nucleus admin console URL is at /nucleus/
+
 Before beginning:
     - Login to nucleus and note down stats like item count and comment count. Open a few items and lock + protect the tab they are in
     

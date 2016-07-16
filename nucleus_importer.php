@@ -4,7 +4,7 @@ Plugin Name: Nucleus to Wordpress importer
 Description: Import content from a Nucleus CMS powered site into WordPress
 Author: Abdussamad 
 License: GPL
-Version: 0.2
+Version: 0.3
 */
 
 set_time_limit(0);
@@ -651,7 +651,7 @@ class nucleus_import extends WP_Importer  {
 		$this->set_form_options();
 		$this->nucblog = get_option( 'nucleus_blog' );
 		$this->nucdb = $this->get_nucleus_db();
-		$this->nucpre = get_option( 'nucleus_prefix' );
+		$this->nucpre = get_option( 'nucleus_prefix', '' );
 		
 		if( $this->site_url = get_option( 'nucleus_wp_site_url' ) ) {
 			if( substr( $this->site_url, 0, 7 ) != 'http://' ) {
