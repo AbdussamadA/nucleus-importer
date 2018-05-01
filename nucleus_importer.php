@@ -2,7 +2,7 @@
 /*
 Plugin Name: Nucleus to Wordpress importer
 Description: Import content from a Nucleus CMS powered site into WordPress
-Author: Abdussamad 
+Author: Abdussamad et al 
 License: GPL
 Version: 0.3
 */
